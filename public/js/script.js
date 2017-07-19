@@ -6,9 +6,39 @@ $(function () {
   const $searchResults = $('#searchResults')
   const $keywordSearch = $('#keywordSearch')
   const $spinner = $('#spinner')
+  const $newUserForm = $('#newUserForm')
 
   const apiUrl = 'https://maps.googleapis.com/maps/api/place/textsearch/json?'
   const apiKey = '&key=AIzaSyCxNyn5I2Me-fv147nnW5uqrRmhVrabebI'
+
+  $newUserForm.on('submit', function (e) {
+    e.preventDefault()
+
+    $formData = $(this).serializeArray()
+
+    var newUser = {
+      user: {
+        name: $formData[0].value,
+        email: $formData[1].value,
+        password: $formData[2].value
+      }
+    }
+
+    $.ajax({
+      url: '/users',
+      type: 'post',
+      data: JSON.stringify(newUser),
+      dataType: 'json',
+      contentType: 'application/json',
+      success: function (output) {
+        console.log(output)
+      }
+    })
+
+    // $.post('/users', newUser, 'json').done(function (output) {
+    //   console.log(output)
+    // })
+  })
 
   $searchResults.on('click', '.addBttn', function (e) {
     e.preventDefault()

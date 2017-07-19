@@ -11,7 +11,17 @@ function create (req, res) {
     }
 
     // flow is user is created
-    res.redirect('/users/new')
+
+    res.format({
+      html: function () {
+        res.redirect('/users/new')
+      },
+
+      json: function () {
+        res.send('respond for ajax')
+      }
+    })
+    // res.redirect('/users/new')
   })
 }
 
