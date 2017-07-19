@@ -21,8 +21,19 @@ $(function () {
       reference: theBttn.data('reference')
     }
 
-    console.log(newPlace)
+    // send the ajax to OUR OWN SERVER
+
+    console.log('sending new place', newPlace)
+    // $.post(url, object)
+    $.post('/places', newPlace).done(function (data) {
+      if (data.status === 'ok') {
+        alert('Hurray! ' + data.message)
+      }
+    })
   })
+
+  // accessing data for spinner
+  $('#spinner').data('speed')
 
   $placeSearch.on('submit', function (e) {
     e.preventDefault()

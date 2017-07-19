@@ -2,6 +2,7 @@
 const mongoose = require('mongoose')
 const express = require('express')
 const exphbs = require('express-handlebars')
+const bodyParser = require('body-parser')
 
 const url = 'mongodb://localhost:27017/placies'
 
@@ -22,16 +23,13 @@ const app = express()
 
 // set middleware
 app.use(express.static('public'))
-
-// custom middleware
-app.use(function (req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*')
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
-  next()
-})
-
 app.engine('handlebars', exphbs({}))
 app.set('view engine', 'handlebars')
+// listen to ajax request - json post
+app.use(bodyParser.json())
+
+// listen to form data submission
+app.use(bodyParser.urlencoded({extended: true}))
 
 // setup all files that the proj needs to require
 const placesRoute = require('./routes/placeRoute')
