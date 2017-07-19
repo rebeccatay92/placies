@@ -2,8 +2,14 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 var placeSchema = new Schema({
-  name: String,
-  address: String,
+  name: {
+    type: String,
+    required: [true, 'Name is required']
+  },
+  address: {
+    type: String,
+    required: [true, 'Address is required']
+  },
   reference: String
 })
 

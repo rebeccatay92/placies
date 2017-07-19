@@ -16,8 +16,8 @@ $(function () {
     const theBttn = $(this)
 
     var newPlace = {
-      name: theBttn.data('name'),
-      address: theBttn.data('address'),
+      // name: theBttn.data('name'),
+      // address: theBttn.data('address'),
       reference: theBttn.data('reference')
     }
 

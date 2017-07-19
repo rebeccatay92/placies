@@ -23,7 +23,9 @@ const app = express()
 
 // set middleware
 app.use(express.static('public'))
-app.engine('handlebars', exphbs({}))
+app.engine('handlebars', exphbs({
+  defaultLayout: 'main'
+}))
 app.set('view engine', 'handlebars')
 // listen to ajax request - json post
 app.use(bodyParser.json())
@@ -33,10 +35,18 @@ app.use(bodyParser.urlencoded({extended: true}))
 
 // setup all files that the proj needs to require
 const placesRoute = require('./routes/placeRoute')
+const usersRoute = require('./routes/userRoute')
 
 // setup your project routes
 // NO REQUIRING AFTER THIS LINE
+// public paths
+app.get('/', function (req, res) {
+  res.render('home')
+})
+
+// non public paths
 app.use('/places', placesRoute)
+app.use('/users', usersRoute)
 
 // and this is opening the port
 const port = 4000
