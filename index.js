@@ -20,6 +20,16 @@ mongoose.connect(url, {
 // this is the express itself
 const app = express()
 
+// set middleware
+app.use(express.static('public'))
+
+// custom middleware
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*')
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+  next()
+})
+
 app.engine('handlebars', exphbs({}))
 app.set('view engine', 'handlebars')
 
