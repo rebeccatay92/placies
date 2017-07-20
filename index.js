@@ -49,7 +49,7 @@ app.use('/places', placesRoute)
 app.use('/users', usersRoute)
 
 // and this is opening the port
-const port = 4000
+const port = 5000
 app.listen(port, function () {
   console.log(`express is running on ${port}`)
 })
