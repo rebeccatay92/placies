@@ -18,20 +18,26 @@ function register (req, res) {
   //   })
   // })
 
-  // getting all places from google place api
-  const apiUrl = 'https://maps.googleapis.com/maps/api/place/textsearch/json?'
-  const apiKey = '&key=AIzaSyCxNyn5I2Me-fv147nnW5uqrRmhVrabebI'
-  const qString = `query=hotels in new york`
-
-  request(`${apiUrl}${qString}${apiKey}`, function (err, response, body) {
-    if (err) res.send(err)
-
-    var data = JSON.parse(body)
-
-    res.render('users/new', {
-      places: data.results
-    })
+  res.send({
+    msg: 'proving dotenv works',
+    googlePlace: process.env.GOOGLE_PLACE_KEY,
+    githubAPI: process.env.GITHUB_API_KEY
   })
+
+  // getting all places from google place api
+  // const apiUrl = 'https://maps.googleapis.com/maps/api/place/textsearch/json?'
+  // const apiKey = `&key=${process.env.GOOGLE_PLACE_KEY}`
+  // const qString = `query=hotels in new york`
+  //
+  // request(`${apiUrl}${qString}${apiKey}`, function (err, response, body) {
+  //   if (err) res.send(err)
+  //
+  //   var data = JSON.parse(body)
+  //
+  //   res.render('users/new', {
+  //     places: data.results
+  //   })
+  // })
 }
 
 function create (req, res) {

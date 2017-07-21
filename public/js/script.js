@@ -46,14 +46,14 @@ $(function () {
     const theBttn = $(this)
 
     var newPlace = {
-      // name: theBttn.data('name'),
-      // address: theBttn.data('address'),
+      name: theBttn.data('name'),
+      address: theBttn.data('address'),
       reference: theBttn.data('reference')
     }
 
     // send the ajax to OUR OWN SERVER
 
-    console.log('sending new place', newPlace)
+    // console.log('sending new place', newPlace)
     // $.post(url, object)
     $.post('/places', newPlace).done(function (data) {
       if (data.status === 'ok') {

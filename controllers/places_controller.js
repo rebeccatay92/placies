@@ -8,7 +8,7 @@ function create (req, res) {
   })
 
   newPlace.save(function (err, newPlace) {
-    if (err) res.send(err)
+    if (err) return res.send(err)
 
     res.send({
       status: 'ok',

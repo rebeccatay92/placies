@@ -1,3 +1,6 @@
+// before everything else. load the .env file
+require('dotenv').config()
+
 // all the modules we install and we need to require
 const mongoose = require('mongoose')
 const express = require('express')
@@ -49,7 +52,7 @@ app.use('/places', placesRoute)
 app.use('/users', usersRoute)
 
 // and this is opening the port
-const port = 5000
+const port = process.env.PORT || 5000
 app.listen(port, function () {
   console.log(`express is running on ${port}`)
 })
