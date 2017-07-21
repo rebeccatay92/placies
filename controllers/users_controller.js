@@ -1,5 +1,38 @@
 const User = require('../models/User')
+const Place = require('../models/Place')
+
+const request = require('request')
 const bcrypt = require('bcrypt')
+
+// function placeSearch(url, callback) {
+//   request(`${apiUrl}${qString}${apiKey}`, callback)
+// }
+
+function register (req, res) {
+  // getting all places from my list of places in the db
+  // Place.find({}, function (err, allPlaces) {
+  //   if (err) res.send(err)
+  //
+  //   res.render('users/new', {
+  //     places: allPlaces
+  //   })
+  // })
+
+  // getting all places from google place api
+  const apiUrl = 'https://maps.googleapis.com/maps/api/place/textsearch/json?'
+  const apiKey = '&key=AIzaSyCxNyn5I2Me-fv147nnW5uqrRmhVrabebI'
+  const qString = `query=hotels in new york`
+
+  request(`${apiUrl}${qString}${apiKey}`, function (err, response, body) {
+    if (err) res.send(err)
+
+    var data = JSON.parse(body)
+
+    res.render('users/new', {
+      places: data.results
+    })
+  })
+}
 
 function create (req, res) {
   var salt = bcrypt.genSaltSync(10)
@@ -35,5 +68,6 @@ function create (req, res) {
 }
 
 module.exports = {
-  create
+  create,
+  register
 }

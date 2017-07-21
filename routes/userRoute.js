@@ -3,9 +3,7 @@ const router = express.Router()
 
 const usersController = require('../controllers/users_controller')
 
-router.get('/new', function (req, res) {
-  res.render('users/new')
-})
+router.get('/new', usersController.register)
 
 router.post('/', usersController.create)
 
