@@ -7,7 +7,8 @@ const express = require('express')
 const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 
-const url = 'mongodb://localhost:27017/placies'
+// const url = 'mongodb://localhost:27017/placies'
+const url = process.env.MLAB_URI
 
 mongoose.Promise = global.Promise
 mongoose.connect(url, {
