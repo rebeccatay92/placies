@@ -5,9 +5,12 @@ require('dotenv').config()
 const mongoose = require('mongoose')
 const express = require('express')
 const exphbs = require('express-handlebars')
+const session = require('express-session')
+const MongoStore = require('connect-mongo')(session)
+const flash = require('connect-flash')
 const bodyParser = require('body-parser')
 
-//self add
+// self add
 const url = process.env.MLAB_URI || 'mongodb://localhost:27017/placies'
 
 mongoose.Promise = global.Promise
@@ -36,12 +39,21 @@ app.use(bodyParser.json())
 
 // listen to form data submission
 app.use(bodyParser.urlencoded({extended: true}))
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: true,
+  store: new MongoStore({
+    url: process.env.MLAB_URI
+  })
+}))
+app.use(flash()) //flash needs sessions. put below
 
 // setup all files that the proj needs to require
 const placesRoute = require('./routes/placeRoute')
 const usersRoute = require('./routes/userRoute')
 
-//setup app.locals variables
+// setup app.locals variables
 app.locals = {
   GOOGLE_PLACE_KEY: process.env.GOOGLE_PLACE_KEY
 }

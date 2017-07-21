@@ -14,7 +14,8 @@ function register (req, res) {
     if (err) res.send(err)
 
     res.render('users/new', {
-      places: allPlaces
+      places: allPlaces,
+      flash: req.flash('errors') //how u get the flash message
     })
   })
 }
@@ -22,11 +23,6 @@ function register (req, res) {
 function create (req, res, next) {
   var salt = bcrypt.genSaltSync(10)
   var hash = bcrypt.hashSync(req.body.user.password, salt)
-
-  // res.send({
-  //   reqbody: req.body,
-  //   hash: hash
-  // })
 
   var newUser = new User ({
     name: req.body.user.name,
@@ -36,7 +32,10 @@ function create (req, res, next) {
 
   newUser.places.push(req.body.place.id)
   newUser.save(function (err, createdUser) {
-    if (err) next(err)
+    if (err) {
+      req.flash('errors', err.message) //how you set the flash message
+      return res.redirect('/users/new')
+    }
     //exit this save middleware to next one
     //leave another middleware to catch error
     res.send({
